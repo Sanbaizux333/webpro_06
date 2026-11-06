@@ -29,6 +29,9 @@ app.get("/keiyo_add", (req, res) => {
 
   //データを配列stationに追加
   station.push(newdata);
+
+  //一覧表示への遷移
+  res.render('db2', {data: station});
 });
 
 app.get("/hello1", (req, res) => {
