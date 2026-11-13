@@ -29,12 +29,10 @@ let station = [
   {id:5, code:"JE14", name:"海浜幕張駅"},
   {id:6, code:"JE05", name:"新浦安駅"},
 ];
-
 //データ一覧の表示
 app.get("/keiyo", (req, res) => {
   res.render('db2', { data:station });
 });
-
 //データ追加
 app.get("/keiyo_add", (req, res) => {
   //入力データの確認
@@ -50,18 +48,37 @@ app.get("/keiyo_add", (req, res) => {
   res.render('db2', {data: station});
 });
 
-//追加データの定義
+//データ追加
+let station2 = [
+  { id:1, code:"JE01", name:"東京駅", change:"総武本線，中央線，etc", passengers:40381, distance:0 },
+  { id:2, code:"JE02", name:"八丁堀駅", change:"日比谷線", passengers:31071, distance:1.2 },
+  { id:3, code:"JE05", name:"新木場駅", change:"有楽町線，りんかい線", passengers:67206, distance:7.4 },
+  { id:4, code:"JE07", name:"舞浜駅", change:"舞浜リゾートライン", passengers:76156,distance:12.7 },
+  { id:5, code:"JE12", name:"新習志野駅", change:"", passengers:11655, distance:28.3 },
+  { id:6, code:"JE17", name:"千葉みなと駅", change:"千葉都市モノレール", passengers:16602, distance:39.0 },
+  { id:7, code:"JE18", name:"蘇我駅", change:"内房線，外房線", passengers:31328, distance:43.0 },
+];
+app.get("/keiyo2", (req, res) => {
+  res.render('keiyo2', {data: station2});
+});
+app.get("/keiyo2/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = station2[number];
+  res.render('keiyo2_detail', {data: detail});
+});
+
+//篠澤データベースの定義
 let hirochan = [
   {id:1, genre:"Pアイドル", type: "やる気", name:"光景"},
   {id:2, genre:"サポカ", type:"Vo", name:"vギャルピーーースッv"},
 ];
 //データ一覧の表示
 app.get("/hiro", (req, res) => {
-  res.render('db3', {data:hirochan});
+  res.render('db3', {data: hirochan});
 });
 //データ追加
 app.get("/hiro_add", (req, res) => {
-  let id = req.qrery.id;
+  let id = req.query.id;
   let genre = req.query.genre;
   let type = req.query.type;
   let name = req.query.name;
