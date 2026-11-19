@@ -5,17 +5,43 @@ app.set('view engine', 'ejs');
 app.use("/public", express.static(__dirname + "/public"));
 
 app.get("/janken2", (req, res) => {
-    //送信されたデータの確認
-    let hand = req.query.hand;
-    let win = Number(req.query.total);
-    let total = Number(req.query.total);
-    console.log({hand, win, total});
+  //送信されたデータの確認
+  let hand = req.query.radio;
+  let win = Number(req.query.win);
+  let total = Number(req.query.total);
+  console.log({hand, win, total});
 
-    //cpuの手
-    const num = Math.floor(Math.random()* 3 + 1);
-    let cpu = '';
-    let judgement = '';
+  //cpuの手
+  const num = Math.floor(Math.random()* 3 + 1);
+  let cpu = '';
+  let judgement = '';
 
+  if( num==1 ) cpu = 'グー';
+  else if( num==2 ) cpu = 'チョキ';
+  else cpu = 'パー';
+
+  // ここに勝敗の判定を入れる
+  if(hand==cpu){
+    judgement = 'あいこ';
+    total += 1;
+  }
+  else if(hand=='グー'&&cpu=='チョキ' || hand=='チョキ'&&cpu=='パー' || hand=='パー'&&cpu=='グー'){
+    judgement = '勝ち';
+    win += 1;
+    total += 1;
+  }
+  else{
+    judgement = '負け';
+    total += 1;
+  }
+
+  const display = {
+    your: hand,
+    cpu: cpu,
+    judgement: judgement,
+    win: win,
+    total: total
+  }
     //結果の表示
     res.render('janken2', display);
 });
@@ -131,12 +157,32 @@ app.get("/janken", (req, res) => {
   if( num==1 ) cpu = 'グー';
   else if( num==2 ) cpu = 'チョキ';
   else cpu = 'パー';
+
   // ここに勝敗の判定を入れる
-  // 以下の数行は人間の勝ちの場合の処理なので，
-  // 判定に沿ってあいこと負けの処理を追加する
-  judgement = '勝ち';
-  win += 1;
-  total += 1;
+  if(hand==cpu){
+    judgement = 'あいこ';
+    total += 1;
+  }
+  else if(hand=='グー' && cpu=='チョキ'){
+    judgement = '勝ち';
+    win += 1;
+    total += 1;
+  }
+  else if(hand=='チョキ' && cpu=='パー'){
+    judgement = '勝ち';
+    win += 1;
+    total += 1;
+  }
+  else if(hand=='パー' && cpu=='グー'){
+    judgement = '勝ち';
+    win += 1;
+    total += 1;
+  }
+  else{
+    judgement = '負け';
+    total += 1;
+  }
+
   const display = {
     your: hand,
     cpu: cpu,
