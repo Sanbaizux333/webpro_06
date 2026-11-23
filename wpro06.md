@@ -49,9 +49,10 @@ name | text | 駅の名前
 stateDiagram-v2
 [*] --> /keiyo2
 [*] --> /public/keiyo2_add.html
-/keiyo2 --> /db4.ejs:データベースを表示
+/keiyo2 --> /keiyo2.ejs:データベースを表示
 /public/keiyo2_add.html --> /keiyo2_add:データを入力(1)
-/keiyo2_add --> /db4.ejs:データを登録し，一覧表示
+/keiyo2_add --> /keiyo2.ejs:データを登録し，一覧表示
+/keiyo2.ejs --> /keiyo2_detail.ejs:詳細を表示
 ```
 #### (1)のパラメータ
 パラメータ名 | 属性 | 内容
@@ -76,7 +77,7 @@ stateDiagram-v2
 #### (1)のパラメータ
 パラメータ名 | 属性 | 内容 | 値
 -|-|-|- 
-id | number | データの登録番号 |
+id | number | データの登録番号 | -
 genre | text | カードのジャンル | Pアイドル/サポカ
 type | text | カードの属性 | やる気/好印象/集中/好調/全力/強気/温存/Vo/Da/Vi
-name | text | カードの名称 |
+name | text | カードの名称 | -
