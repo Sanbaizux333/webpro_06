@@ -74,7 +74,7 @@ app.get("/keiyo_add", (req, res) => {
   res.render('db2', {data: station});
 });
 
-//データ追加
+//詳細表示可能なDB
 let station2 = [
   { id:1, code:"JE01", name:"東京駅", change:"総武本線，中央線，etc", passengers:40381, distance:0 },
   { id:2, code:"JE02", name:"八丁堀駅", change:"日比谷線", passengers:31071, distance:1.2 },
@@ -91,6 +91,19 @@ app.get("/keiyo2/:number", (req, res) => {
   const number = req.params.number;
   const detail = station2[number];
   res.render('keiyo2_detail', {data: detail});
+});
+//データ追加を行う
+app.get("/keiyo2_add", (req, res) => {
+  let id = req.query.id;
+  let code = req.query.code;
+  let name = req.query.name;
+  let change = req.query.change;
+  let passengers = req.query.passengers;
+  let distance = req.query.distance;
+
+  let newdata = {id:id, code:code, name:name, change:change, passengers:passengers, distance:distance};
+  station2.push(newdata);
+  res.render('keiyo2', {data: station2});
 });
 
 //篠澤データベースの定義

@@ -31,28 +31,52 @@ total | hidden | 対戦数 | これまでの対戦数
 ```mermaid
 stateDiagram-v2
 [*] --> /keiyo
-[*] --> /keiyo_add
+[*] --> /public/keiyo_add.html
 /keiyo --> /db2.ejs:データベースを表示
-/keiyo_add --> /public/keiyo_add.html:データを追加
-/public/keiyo_add.html --> /db2.ejs:データベースを表示
+/public/keiyo_add.html --> /keiyo_add:データを入力(1)
+/keiyo_add --> /db2.ejs:データを登録し，一覧表示
 ```
+#### (1)のパラメータ
+パラメータ名 | 属性 | 内容
+-|-|-
+id | number | データの登録番号
+code | text | 駅コード
+name | text | 駅の名前
+
 ### keiyo2関係
 #### ページ遷移図
 ```mermaid
 stateDiagram-v2
 [*] --> /keiyo2
-[*] --> /keiyo2_add
+[*] --> /public/keiyo2_add.html
 /keiyo2 --> /db4.ejs:データベースを表示
-/keiyo2_add --> /public/keiyo2_add.html:データを追加
-/public/keiyo2_add.html --> /db4.ejs:データベースを表示
+/public/keiyo2_add.html --> /keiyo2_add:データを入力(1)
+/keiyo2_add --> /db4.ejs:データを登録し，一覧表示
 ```
+#### (1)のパラメータ
+パラメータ名 | 属性 | 内容
+-|-|-
+id | number | データの登録番号
+code | text | 駅コード
+name | text | 駅の名前
+change | text | 駅の乗り換え線
+passengers | text | 駅の利用者数
+distance | number | 駅の東京駅からの距離
+
 ### hiro関係
 #### ページ遷移図
 ```mermaid
 stateDiagram-v2
 [*] --> /hiro
-[*] --> /hiro_add
+[*] --> /public/hiro_add.html
 /hiro --> /db3.ejs:データベースを表示
-/hiro_add --> /public/hiro_add.html:データを追加
-/public/hiro_add.html --> /db3.ejs:データベースを表示
+/public/hiro_add.html --> /hiro_add:データを入力(1)
+/hiro_add --> /db3.ejs:データを登録し，一覧表示
 ```
+#### (1)のパラメータ
+パラメータ名 | 属性 | 内容 | 値
+-|-|-|- 
+id | number | データの登録番号 |
+genre | text | カードのジャンル | Pアイドル/サポカ
+type | text | カードの属性 | やる気/好印象/集中/好調/全力/強気/温存/Vo/Da/Vi
+name | text | カードの名称 |
