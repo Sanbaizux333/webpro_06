@@ -3,6 +3,8 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.use("/public", express.static(__dirname + "/public"));
+//リクエストボディを使用するための追加
+app.use(express.urlencoded({extended: true}));
 
 app.get("/janken2", (req, res) => {
   //送信されたデータの確認
@@ -84,27 +86,56 @@ let station2 = [
   { id:6, code:"JE17", name:"千葉みなと駅", change:"千葉都市モノレール", passengers:16602, distance:39.0 },
   { id:7, code:"JE18", name:"蘇我駅", change:"内房線，外房線", passengers:31328, distance:43.0 },
 ];
-app.get("/keiyo2", (req, res) => {
-  res.render('keiyo2', {data: station2});
+//Create入力開始
+app.get("/keiyo/create", (req, res) => {
+  //入力フォームへ
+  res.redirect('/public/keiyo2_new.html');
 });
+//Read
 app.get("/keiyo2/:number", (req, res) => {
+  const number =req.params.number;
+  const detail = station2[number];
+  res.render('keiyo2_detail', {id:number, data:detail});
+});
+//Delete
+app.get("/keiyo/delete/:number", (req, res) => {
+  //削除
+  station2.splice(req.params.number, 1);
+  res.redirect('/keiyo2');
+});
+//Create追加
+app.post("/keiyo2", (req, res) => {
+  const id = station2.length + 1;
+  const code = req.body.code;
+  const name = req.body.name;
+  const change = req.body.change;
+  const passengers = req.body.passengers;
+  const distance = req.body.distance;
+
+  station.push({id:id, code:code, name:name, change:change, passengers:passengers, distance:distance});
+  console.log(station2);
+  //一覧表示
+  res.render('/keiyo2', {data:station2});
+});
+//Edit
+app.get("/keiyo/edit/:number", (req, res) => {
   const number = req.params.number;
   const detail = station2[number];
-  res.render('keiyo2_detail', {data: detail});
+  //編集フォームへ
+  res.render('keiyo2_edit', {id:number, data:detail});
 });
-//データ追加を行う
-app.get("/keiyo2_add", (req, res) => {
-  let id = req.query.id;
-  let code = req.query.code;
-  let name = req.query.name;
-  let change = req.query.change;
-  let passengers = req.query.passengers;
-  let distance = req.query.distance;
+//Update
+app.post("/keiyo2/update/:number", (req, res) => {
+  station2[req.params.number].code = req.body.code;
+  station2[req.params.number].name = req.body.name;
+  station2[req.params.number].change = req.body.change;
+  station2[req.params.number].passengers = req.body.passengers;
+  station2[req.params.number].distance = req.body.distance;
 
-  let newdata = {id:id, code:code, name:name, change:change, passengers:passengers, distance:distance};
-  station2.push(newdata);
-  res.render('keiyo2', {data: station2});
-});
+  console.log(station2);
+  //一覧表示へ
+  res.redirect('/keiyo2');
+})
 
 //篠澤データベースの定義
 let hirochan = [
