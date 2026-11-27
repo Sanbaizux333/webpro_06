@@ -103,6 +103,7 @@ app.get("/keiyo2/:number", (req, res) => {
 //Delete
 app.get("/keiyo2/delete/:number", (req, res) => {
   //削除
+  console.log("delete");
   station2.splice(req.params.number, 1);
   res.redirect('/keiyo2');
 });
@@ -115,10 +116,11 @@ app.post("/keiyo2", (req, res) => {
   const passengers = req.body.passengers;
   const distance = req.body.distance;
 
-  station.push({id:id, code:code, name:name, change:change, passengers:passengers, distance:distance});
+  let newdata = {id:id, code:code, name:name, change:change, passengers:passengers, distance:distance};
+  station2.push(newdata);
   console.log(station2);
   //一覧表示
-  res.render('/keiyo2', {data:station2});
+  res.render('keiyo2', {data:station2});
 });
 //Edit
 app.get("/keiyo2/edit/:number", (req, res) => {
