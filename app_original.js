@@ -76,7 +76,7 @@ app.get("/keiyo_add", (req, res) => {
   res.render('db2', {data: station});
 });
 
-//詳細表示可能なDB
+//詳細表示可能なDB,keiyo2
 let station2 = [
   { id:1, code:"JE01", name:"東京駅", change:"総武本線，中央線，etc", passengers:40381, distance:0 },
   { id:2, code:"JE02", name:"八丁堀駅", change:"日比谷線", passengers:31071, distance:1.2 },
@@ -86,8 +86,11 @@ let station2 = [
   { id:6, code:"JE17", name:"千葉みなと駅", change:"千葉都市モノレール", passengers:16602, distance:39.0 },
   { id:7, code:"JE18", name:"蘇我駅", change:"内房線，外房線", passengers:31328, distance:43.0 },
 ];
+app.get("/keiyo2", (req, res) => {
+  res.render('keiyo2', { data:station2 });
+});
 //Create入力開始
-app.get("/keiyo/create", (req, res) => {
+app.get("/keiyo2/create", (req, res) => {
   //入力フォームへ
   res.redirect('/public/keiyo2_new.html');
 });
@@ -98,7 +101,7 @@ app.get("/keiyo2/:number", (req, res) => {
   res.render('keiyo2_detail', {id:number, data:detail});
 });
 //Delete
-app.get("/keiyo/delete/:number", (req, res) => {
+app.get("/keiyo2/delete/:number", (req, res) => {
   //削除
   station2.splice(req.params.number, 1);
   res.redirect('/keiyo2');
@@ -118,7 +121,7 @@ app.post("/keiyo2", (req, res) => {
   res.render('/keiyo2', {data:station2});
 });
 //Edit
-app.get("/keiyo/edit/:number", (req, res) => {
+app.get("/keiyo2/edit/:number", (req, res) => {
   const number = req.params.number;
   const detail = station2[number];
   //編集フォームへ
@@ -137,7 +140,7 @@ app.post("/keiyo2/update/:number", (req, res) => {
   res.redirect('/keiyo2');
 })
 
-//篠澤データベースの定義
+//篠澤データベース,hiro
 let hirochan = [
   {id:1, genre:"Pアイドル", type: "やる気", name:"光景"},
   {id:2, genre:"サポカ", type:"Vo", name:"vギャルピーーースッv"},
